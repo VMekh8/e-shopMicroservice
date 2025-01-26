@@ -1,7 +1,6 @@
 ﻿using Carter;
 using Mapster;
 using MediatR;
-using Microsoft.AspNetCore.Authentication.OAuth;
 
 namespace Catalog.API.Products.CreateProduct;
 
