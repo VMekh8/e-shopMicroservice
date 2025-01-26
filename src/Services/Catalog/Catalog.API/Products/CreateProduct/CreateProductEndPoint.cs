@@ -1,6 +1,7 @@
 ﻿using Carter;
 using Mapster;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.OAuth;
 
 namespace Catalog.API.Products.CreateProduct;
 
@@ -26,6 +27,11 @@ public class CreateProductEndPoint : ICarterModule
             var response = new CreateProductResponse(result.Id);
 
             return Results.Created($"/products/{response.Id}", response);
-        });
+        })
+        .WithName("CreateProduct")
+        .WithDescription("Creating Product")
+        .Produces<CreateProductResponse>(StatusCodes.Status201Created)
+        .ProducesProblem(StatusCodes.Status400BadRequest)
+        .WithSummary("Create Product");
     }
 }
