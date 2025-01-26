@@ -1,7 +1,6 @@
 ﻿using MediatR;
 
-namespace Catalog.API.Products.CreateProduct;
+namespace BuildingBlock.CQRS.Queries;
 
-public interface IQuery<out TResponse> : IRequest<TResponse> 
-    where TResponse : notnull
-{ }
+public interface IQuery<out TResponse> : IRequest<TResponse>
+    where TResponse : notnull;

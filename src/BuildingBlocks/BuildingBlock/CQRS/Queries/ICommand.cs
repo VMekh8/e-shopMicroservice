@@ -1,8 +1,7 @@
 ﻿using MediatR;
 
-namespace Catalog.API.Products.CreateProduct;
+namespace BuildingBlock.CQRS.Queries;
 
-public interface ICommand<out TResponse> : IRequest<TResponse>
-{}
+public interface ICommand<out TResponse> : IRequest<TResponse>;
 
-public interface ICommand : ICommand<Unit> {}
+public interface ICommand : ICommand<Unit>;
