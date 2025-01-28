@@ -2,7 +2,6 @@
 using BuildingBlock.CQRS.QueryHandlers;
 using Catalog.API.Exceptions;
 using Catalog.API.Models;
-using Mapster;
 using Marten;
 
 namespace Catalog.API.Products.GetProductById;
