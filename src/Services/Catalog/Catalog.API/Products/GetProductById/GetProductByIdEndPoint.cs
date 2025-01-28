@@ -1,5 +1,4 @@
 ﻿using Carter;
-using Mapster;
 using MediatR;
 
 namespace Catalog.API.Products.GetProductById;
@@ -8,13 +7,11 @@ public class GetProductByIdEndPoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapGet("/products/{id:guid}", async (GetProductByIdQuery query,
+        app.MapGet("/products/{id:guid}", async (Guid id,
             ISender sender) =>
             {
-                var result = await sender.Send(query);
-
-                var response = result.Adapt<GetProductByIdResponse>();
-                return Results.Ok(response);
+                var result = await sender.Send(new GetProductByIdQuery(id));
+                return Results.Ok(result);
 
             }).WithName("GetProductById")
         .WithDescription("GetProductById")

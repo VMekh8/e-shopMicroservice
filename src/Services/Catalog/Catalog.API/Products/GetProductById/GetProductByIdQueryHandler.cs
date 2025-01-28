@@ -8,7 +8,7 @@ namespace Catalog.API.Products.GetProductById;
 
 public record GetProductByIdQuery(Guid Id) : IQuery<GetProductByIdResponse>;
 
-public record GetProductByIdResponse(Product product);
+public record GetProductByIdResponse(Product Product);
 
 internal sealed class GetProductByIdQueryHandler : IQueryHandler<GetProductByIdQuery, GetProductByIdResponse>
 {
