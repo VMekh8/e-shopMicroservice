@@ -1,6 +1,8 @@
 ﻿using BuildingBlock.CQRS.Queries;
 using BuildingBlock.CQRS.QueryHandlers;
 using Catalog.API.Models;
+using Catalog.API.Products.UpdateProduct;
+using JasperFx.Core;
 using Marten;
 
 namespace Catalog.API.Products.CreateProduct;
@@ -14,18 +16,22 @@ public record CreateProductCommand(
 
 public record CreateProductResult(Guid Id);
 
-internal sealed class CreateProductHandler : ICommandHandler<CreateProductCommand, CreateProductResult>
+internal sealed class CreateProductCommandHandler : ICommandHandler<CreateProductCommand, CreateProductResult>
 {
     private readonly IDocumentSession _session;
+    private readonly ILogger<CreateProductCommandHandler> _logger;
 
-    public CreateProductHandler(IDocumentSession session)
+    public CreateProductCommandHandler(IDocumentSession session, ILogger<CreateProductCommandHandler> logger)
     {
         _session = session;
+        _logger = logger;
     }
 
     public async Task<CreateProductResult> Handle(CreateProductCommand request,
         CancellationToken cancellationToken)
     {
+        _logger.LogInformation("CreateProductCommand.Handler called by command: {request}", request);
+
         var product = new Product
         {
             Id = Guid.NewGuid(),
