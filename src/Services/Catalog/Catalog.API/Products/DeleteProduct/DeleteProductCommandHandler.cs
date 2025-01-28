@@ -27,6 +27,6 @@ public class DeleteProductCommandHandler : ICommandHandler<DeleteProductCommand,
         _session.Delete<Product>(request.Id);
         await _session.SaveChangesAsync(cancellationToken);
 
-        return new DeleteProductResponse(true);
+        return new DeleteProductResponse(Deleted: true);
     }
 }
