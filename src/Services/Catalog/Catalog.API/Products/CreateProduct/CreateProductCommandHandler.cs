@@ -1,8 +1,6 @@
 ﻿using BuildingBlock.CQRS.Queries;
 using BuildingBlock.CQRS.QueryHandlers;
 using Catalog.API.Models;
-using Catalog.API.Products.UpdateProduct;
-using JasperFx.Core;
 using Marten;
 
 namespace Catalog.API.Products.CreateProduct;
