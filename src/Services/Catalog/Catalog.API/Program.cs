@@ -43,7 +43,7 @@ app.UseExceptionHandler(exceptionHandlerApp =>
             Detail = exception.StackTrace
         };
 
-        var logger = context.RequestServices.GetRequiredKeyedService<ILogger<Program>>();
+        var logger = context.RequestServices.GetRequiredService<ILogger<Program>>();
 
         logger.LogError(exception, exception.Message);
 

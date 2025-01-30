@@ -29,7 +29,7 @@ internal sealed class GetProductByIdQueryHandler : IQueryHandler<GetProductByIdQ
 
         if (product is null)
         {
-            throw new ProductNotFoundException();
+            throw new ProductNotFoundException(query.Id);
         }
 
         return new GetProductByIdResponse(product);
