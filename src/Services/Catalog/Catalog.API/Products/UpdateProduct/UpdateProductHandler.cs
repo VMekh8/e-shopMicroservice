@@ -20,18 +20,14 @@ public record UpdateProductResponse(bool Updated);
 public class UpdateProductHandler : ICommandHandler<UpdateProductCommand, UpdateProductResponse>
 {
     private readonly IDocumentSession _documentSession;
-    private readonly ILogger<UpdateProductHandler> _logger;
 
-    public UpdateProductHandler(ILogger<UpdateProductHandler> logger, IDocumentSession documentSession)
+    public UpdateProductHandler(IDocumentSession documentSession)
     {
         _documentSession = documentSession;
-        _logger = logger;
     }
 
     public async Task<UpdateProductResponse> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
     {
-        _logger.LogInformation("UpdateProductCommand.Handler called for request with id: {id}", request.Id);
-
         var product = await _documentSession.LoadAsync<Product>(request.Id, cancellationToken);
         if (product is null)
         {

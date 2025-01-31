@@ -13,18 +13,14 @@ public record GetProductByIdResponse(Product Product);
 internal sealed class GetProductByIdQueryHandler : IQueryHandler<GetProductByIdQuery, GetProductByIdResponse>
 {
     private readonly IQuerySession _session;
-    private readonly ILogger<GetProductByIdQueryHandler> _logger;
 
-    public GetProductByIdQueryHandler(IQuerySession session, ILogger<GetProductByIdQueryHandler> logger)
+    public GetProductByIdQueryHandler(IQuerySession session)
     {
         _session = session;
-        _logger = logger;
     }
 
     public async Task<GetProductByIdResponse> Handle(GetProductByIdQuery query, CancellationToken cancellationToken)
     {
-        _logger.LogInformation("GetProductByIdQuery.Handler called by query: {query}", query);
-
         var product = await _session.LoadAsync<Product>(query.Id, cancellationToken);
 
         if (product is null)

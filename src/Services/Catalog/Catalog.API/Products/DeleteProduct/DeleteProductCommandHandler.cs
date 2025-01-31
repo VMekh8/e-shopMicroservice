@@ -12,18 +12,14 @@ public record DeleteProductResponse(bool Deleted);
 public class DeleteProductCommandHandler : ICommandHandler<DeleteProductCommand, DeleteProductResponse>
 {
     private readonly IDocumentSession _session;
-    private readonly ILogger<DeleteProductCommandHandler> _logger;
 
-    public DeleteProductCommandHandler(IDocumentSession session, ILogger<DeleteProductCommandHandler> logger)
+    public DeleteProductCommandHandler(IDocumentSession session)
     {
         _session = session;
-        _logger = logger;
     }
 
     public async Task<DeleteProductResponse> Handle(DeleteProductCommand request, CancellationToken cancellationToken)
     {
-        _logger.LogInformation("DeleteProductCommand.Handler called by command: {request}", request);
-
         _session.Delete<Product>(request.Id);
         await _session.SaveChangesAsync(cancellationToken);
 

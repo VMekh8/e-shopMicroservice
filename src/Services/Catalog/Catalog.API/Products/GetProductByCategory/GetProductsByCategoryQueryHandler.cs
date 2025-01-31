@@ -14,18 +14,14 @@ internal sealed class GetProductsByCategoryQueryHandler :
     IQueryHandler<GetProductByCategoryQuery, GetProductByCategoryResponse>
 {
     private readonly IQuerySession _session;
-    private readonly ILogger<GetProductsByCategoryQueryHandler> _logger;
 
-    public GetProductsByCategoryQueryHandler(ILogger<GetProductsByCategoryQueryHandler> logger, IQuerySession session)
+    public GetProductsByCategoryQueryHandler(IQuerySession session)
     {
         _session = session;
-        _logger = logger;
     }
 
     public async Task<GetProductByCategoryResponse> Handle(GetProductByCategoryQuery query, CancellationToken cancellationToken)
     {
-        _logger.LogInformation("GetProductByCategoryQuery.Handler called by query: {query}", query);
-
         var products = await _session.Query<Product>()
             .Where(p => p.Category.Contains(query.Category))
             .ToListAsync(cancellationToken);
