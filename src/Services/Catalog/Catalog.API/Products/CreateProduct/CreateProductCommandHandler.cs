@@ -17,19 +17,15 @@ public record CreateProductResult(Guid Id);
 internal sealed class CreateProductCommandHandler : ICommandHandler<CreateProductCommand, CreateProductResult>
 {
     private readonly IDocumentSession _session;
-    private readonly ILogger<CreateProductCommandHandler> _logger;
 
-    public CreateProductCommandHandler(IDocumentSession session, ILogger<CreateProductCommandHandler> logger)
+    public CreateProductCommandHandler(IDocumentSession session)
     {
         _session = session;
-        _logger = logger;
     }
 
     public async Task<CreateProductResult> Handle(CreateProductCommand request,
         CancellationToken cancellationToken)
     {
-        _logger.LogInformation("CreateProductCommand.Handler called by command: {request}", request);
-
         var product = new Product
         {
             Id = Guid.NewGuid(),
