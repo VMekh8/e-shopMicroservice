@@ -1,5 +1,6 @@
 using BuildingBlock.BehaviorPipeline;
 using Carter;
+using Catalog.API.Data;
 using FluentValidation;
 using Marten;
 using Microsoft.AspNetCore.Diagnostics;
@@ -22,6 +23,9 @@ builder.Services.AddMarten(opt =>
 {
     opt.Connection(builder.Configuration.GetConnectionString("Database")!);
 }).UseLightweightSessions();
+
+if (builder.Environment.IsDevelopment())
+    builder.Services.InitializeMartenWith<CatalogInitializeData>();
 
 builder.Services.AddCarter();
 

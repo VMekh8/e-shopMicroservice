@@ -22,4 +22,8 @@
     <ProjectReference Include="..\..\..\BuildingBlocks\BuildingBlock\BuildingBlock.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Data\" />
+  </ItemGroup>
+
 </Project>
