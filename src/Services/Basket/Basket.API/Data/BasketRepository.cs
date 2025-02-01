@@ -1,4 +1,5 @@
-﻿using Basket.API.Models;
+﻿using Basket.API.Exceptions;
+using Basket.API.Models;
 using BuildingBlock.Exceptions;
 using Marten;
 
@@ -16,7 +17,7 @@ public class BasketRepository : IBasketRepository
     public async Task<ShoppingCart> GetBasket(string userName, CancellationToken cancellation = default)
     {
         var basket = await _session.LoadAsync<ShoppingCart>(userName, cancellation);
-        return basket ?? throw new NotFoundException();
+        return basket ?? throw new BasketNotFoundException(userName);
     }
 
     public async Task<ShoppingCart> StoreBasket(ShoppingCart cart, CancellationToken cancellation = default)
