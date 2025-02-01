@@ -2,13 +2,17 @@ using BuildingBlock.BehaviorPipeline;
 using Carter;
 using Catalog.API.Data;
 using FluentValidation;
+using HealthChecks.UI.Client;
 using Marten;
 using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Mvc;
 using OpenTelemetry.Trace;
 
 var builder = WebApplication.CreateBuilder(args);
 var assembly = typeof(Program).Assembly;
+var dbConnectionString = builder.Configuration.GetConnectionString("Database");
+
 
 builder.Services.AddMediatR(configuration =>
 {
@@ -21,7 +25,7 @@ builder.Services.AddValidatorsFromAssembly(assembly);
 
 builder.Services.AddMarten(opt =>
 {
-    opt.Connection(builder.Configuration.GetConnectionString("Database")!);
+    opt.Connection(dbConnectionString!);
 }).UseLightweightSessions();
 
 if (builder.Environment.IsDevelopment())
@@ -29,7 +33,16 @@ if (builder.Environment.IsDevelopment())
 
 builder.Services.AddCarter();
 
+builder.Services.AddHealthChecks()
+    .AddNpgSql(dbConnectionString!);
+
 var app = builder.Build();
+
+app.UseHealthChecks("/health", 
+    new HealthCheckOptions
+    {
+        ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+    });
 
 app.UseExceptionHandler(exceptionHandlerApp =>
 {
