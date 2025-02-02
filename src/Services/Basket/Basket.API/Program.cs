@@ -1,6 +1,7 @@
 using Basket.API.Data;
 using Basket.API.Models;
 using BuildingBlock.BehaviorPipeline;
+using BuildingBlock.Exceptions.Handlers;
 using Carter;
 using FluentValidation;
 using Marten;
@@ -28,7 +29,11 @@ builder.Services.AddMarten(options =>
 
 builder.Services.AddScoped<IBasketRepository, BasketRepository>();
 
+builder.Services.AddExceptionHandler<CustomExceptionHandler>();
+
 var app = builder.Build();
+
+app.UseExceptionHandler(opt => { });
 
 app.MapCarter();
 
