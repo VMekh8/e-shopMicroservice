@@ -1,4 +1,5 @@
 using BuildingBlock.BehaviorPipeline;
+using BuildingBlock.Exceptions.Handlers;
 using Carter;
 using Catalog.API.Data;
 using FluentValidation;
@@ -7,7 +8,6 @@ using Marten;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Mvc;
-using OpenTelemetry.Trace;
 
 var builder = WebApplication.CreateBuilder(args);
 var assembly = typeof(Program).Assembly;
@@ -36,6 +36,8 @@ builder.Services.AddCarter();
 builder.Services.AddHealthChecks()
     .AddNpgSql(dbConnectionString!);
 
+builder.Services.AddExceptionHandler<CustomExceptionHandler>();
+
 var app = builder.Build();
 
 app.UseHealthChecks("/health", 
@@ -44,32 +46,7 @@ app.UseHealthChecks("/health",
         ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
     });
 
-app.UseExceptionHandler(exceptionHandlerApp =>
-{
-    exceptionHandlerApp.Run(async context =>
-    {
-        var exception = context.Features.Get<IExceptionHandlerFeature>()?.Error;
-        if (exception is null)
-        {
-            return;
-        }
-
-        var problemDetails = new ProblemDetails
-        {
-            Title = exception.Message,
-            Status = StatusCodes.Status500InternalServerError,
-            Detail = exception.StackTrace
-        };
-
-        var logger = context.RequestServices.GetRequiredService<ILogger<Program>>();
-
-        logger.LogError(exception, exception.Message);
-
-        context.Response.StatusCode = StatusCodes.Status500InternalServerError;
-        context.Response.ContentType = "application/problem+json";
-        await context.Response.WriteAsJsonAsync(problemDetails);
-    });
-});
+app.UseExceptionHandler(opt => { });
 
 app.MapCarter();
 
