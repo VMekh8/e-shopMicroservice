@@ -17,6 +17,9 @@ services:
       context: .
       dockerfile: Services/Basket/Basket.API/Dockerfile
 
+  distributed_cache:
+    image: redis
+
 volumes:
   postgres_catalog:
   postgres_basket:
