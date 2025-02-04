@@ -20,11 +20,11 @@ public class BasketRepository : IBasketRepository
         return basket ?? throw new BasketNotFoundException(userName);
     }
 
-    public async Task<ShoppingCart> StoreBasket(ShoppingCart cart, CancellationToken cancellation = default)
+    public async Task<ShoppingCart> StoreBasket(ShoppingCart basket, CancellationToken cancellation = default)
     {
-        _session.Store(cart);
+        _session.Store(basket);
         await _session.SaveChangesAsync(cancellation);
-        return cart;
+        return basket;
     }
 
     public async Task<bool> DeleteBasket(string userName, CancellationToken cancellation = default)
