@@ -400,3 +400,4 @@ src/Services/Catalog/Catalog.API/appsettings.Development.json
 src/docker-compose.override.yml
 src/Services/Basket/Basket.API/appsettings.json
 src/Services/Basket/Basket.API/appsettings.Development.json
+src/Services/Discount/Discount.gRPC/appsettings.Development.json
