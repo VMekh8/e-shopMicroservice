@@ -3,6 +3,7 @@ using Basket.API.Models;
 using BuildingBlock.BehaviorPipeline;
 using BuildingBlock.Exceptions.Handlers;
 using Carter;
+using Discount.gRPC;
 using FluentValidation;
 using HealthChecks.UI.Client;
 using Marten;
@@ -36,6 +37,11 @@ builder.Services.AddStackExchangeRedisCache(opt =>
 {
     opt.Configuration = redisConnectionString;
     opt.InstanceName = "Basket";
+});
+
+builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(opt =>
+{
+    opt.Address = new Uri(builder.Configuration["GrpcConfiguration:DiscountUrl"]);
 });
 
 builder.Services.AddScoped<IBasketRepository, BasketRepository>();
