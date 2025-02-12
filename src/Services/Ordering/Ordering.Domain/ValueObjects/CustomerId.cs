@@ -8,10 +8,8 @@ public record CustomerId
 
     private CustomerId(Guid value) => Value = value;
 
-    public static CustomerId of(Guid value)
+    public static CustomerId Of(Guid value)
     {
-        ArgumentNullException.ThrowIfNull(value);
-
         if (value == Guid.Empty)
         {
             throw new DomainException("Customer Id can`t be null");
