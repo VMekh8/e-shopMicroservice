@@ -4,7 +4,7 @@ using Ordering.Domain.ValueObjects;
 
 namespace Ordering.Domain.Models;
 
-public class Order : Aggregate<Guid>
+public class Order : Aggregate<OrderId>
 {
     private readonly IList<OrderItem> _orderItems = [];
 
