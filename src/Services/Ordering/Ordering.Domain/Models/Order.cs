@@ -27,4 +27,6 @@ public class Order : Aggregate<OrderId>
         get => OrderItems.Sum(x => x.Price * x.Quantity);
         private set { }
     }
+
+
 }
