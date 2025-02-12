@@ -1,5 +1,6 @@
 ﻿using Ordering.Domain.Abstractions;
 using Ordering.Domain.Enums;
+using Ordering.Domain.Events;
 using Ordering.Domain.ValueObjects;
 
 namespace Ordering.Domain.Models;
@@ -28,5 +29,62 @@ public class Order : Aggregate<OrderId>
         private set { }
     }
 
+    public static Order Create(
+        OrderId orderId,
+        CustomerId customerId,
+        OrderName orderName,
+        Address shippingAddress,
+        Address billingAddress,
+        Payment payment)
+    {
+        var order = new Order
+        {
+            Id = orderId,
+            CustomerId = customerId,
+            OrderName = orderName,
+            ShippingAddress = shippingAddress,
+            BillingAddress = billingAddress,
+            Payment = payment,
+            Status = OrderStatus.Pending
+        };
 
+        order.AddDomainEvent(new OrderCreatedEvent(order));
+
+        return order;
+    }
+
+    public void Update(
+        OrderName orderName, 
+        Address shippingAddress, 
+        Address billingAddress, 
+        Payment payment, 
+        OrderStatus status)
+    {
+        OrderName = orderName;
+        ShippingAddress = shippingAddress;
+        BillingAddress = billingAddress;
+        Payment = payment;
+        Status = status;
+
+        AddDomainEvent(new OrderUpdatedEvent(this));
+    }
+
+    public void Add(ProductId productId, decimal price, int quantity)
+    {
+        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(price);
+        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(quantity);
+
+        var orderItem = new OrderItem(Id, productId, quantity, price);
+        _orderItems.Add(orderItem);
+    }
+
+    public void Remove(ProductId productId)
+    {
+        var orderItem = _orderItems.FirstOrDefault(x => x.ProductId == productId);
+
+        if (orderItem is not null)
+        {
+            _orderItems.Remove(orderItem);
+        }
+    }
 }
