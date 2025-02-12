@@ -1,4 +1,5 @@
 ﻿using Ordering.Domain.Abstractions;
+using Ordering.Domain.Enums;
 using Ordering.Domain.ValueObjects;
 
 namespace Ordering.Domain.Models;
@@ -9,9 +10,9 @@ public class Order : Aggregate<Guid>
 
     public IReadOnlyList<OrderItem> OrderItems => _orderItems.AsReadOnly();
 
-    public Guid CustomerId { get; private set; } = Guid.Empty;
+    public CustomerId CustomerId { get; private set; } = null!;
 
-    public string OrderName { get; set; } = string.Empty;
+    public OrderName OrderName { get; set; } = null!;
 
     public Address ShippingAddress { get; set; } = null!;
 
@@ -19,7 +20,7 @@ public class Order : Aggregate<Guid>
 
     public Payment Payment { get; set; } = null!;
 
-    public OrderStatus Status { get; set; } = null!;
+    public OrderStatus Status { get; set; } = OrderStatus.Pending;
 
     public decimal TotalPrice
     {
