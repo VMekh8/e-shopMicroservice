@@ -26,6 +26,10 @@ public record Payment
         PaymentMethod = paymentMethod;
     }
 
+    private Payment()
+    {
+    }
+
     public static Payment Of(
         string? cardName,
         string cardNumber,
