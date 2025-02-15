@@ -10,14 +10,14 @@ public static class DependencyInjections
         IConfiguration configuration)
     {
 
-        var connectionString = configuration.GetConnectionString("Database");
+        //var connectionString = configuration.GetConnectionString("Database");
 
-        services.AddDbContext<,>(opt =>
-        {
-            opt.UseSqlServer(connectionString);
-        });
+        //services.AddDbContext<,>(opt =>
+        //{
+        //    opt.UseSqlServer(connectionString);
+        //});
 
-        services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
+        //services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
 
         return services;
     }
