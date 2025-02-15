@@ -2,20 +2,20 @@
 using Microsoft.EntityFrameworkCore;
 using Ordering.Domain.Models;
 
-namespace Ordering.Application.Data;
+namespace Ordering.Infrastructure.Data;
 
 public class ApplicationDbContext : DbContext
 {
     public DbSet<Customer> Customers => Set<Customer>();
 
     public DbSet<Order> Orders => Set<Order>();
-    
+
     public DbSet<Product> Products => Set<Product>();
-    
+
     public DbSet<OrderItem> OrderItems => Set<OrderItem>();
 
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) 
-        : base(options) {}
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        : base(options) { }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
