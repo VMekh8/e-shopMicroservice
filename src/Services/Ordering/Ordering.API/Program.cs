@@ -1,5 +1,5 @@
 using Ordering.Application;
-using Ordering.Application.Extensions;
+using Ordering.Infrastructure.Data.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
