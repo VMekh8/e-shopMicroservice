@@ -15,6 +15,7 @@
     <Folder Include="Exceptions\" />
     <Folder Include="Orders\Commands\CreateOrder\" />
     <Folder Include="Orders\EventHandlers\" />
+    <Folder Include="Orders\Queries\GetOrders\" />
   </ItemGroup>
 
   <ItemGroup>
